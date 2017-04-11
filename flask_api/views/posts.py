@@ -6,6 +6,7 @@ from mako.template import Template
 import json
 from ..models.post import Post, DBSession
 from ..utils.http import success, failed
+from flask_api.email import send_info
 
 bp = Blueprint('posts', __name__)
 
@@ -21,6 +22,8 @@ def index():
     posts = session.query(Post).all()
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
+    send_info.delay()
+    # send_info()
     return success(data=data)
 
 
@@ -33,5 +36,4 @@ def create():
     session.add(new_post)
     session.commit()
     session.close()
-    data = {'success': True}
-    return json.dumps({})
+    return success()
