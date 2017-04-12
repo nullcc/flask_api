@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    flaskbb.post.models
-"""
 
 from flask import url_for
 from flask_api.extensions import db

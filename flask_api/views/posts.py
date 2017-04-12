@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 from flask import Blueprint, g, request, current_app as app
 from mako.template import Template
-import json
 from ..models.post import Post, DBSession
 from ..utils.http import success, failed
-from flask_api.email import send_info
 
 bp = Blueprint('posts', __name__)
 
@@ -22,8 +21,6 @@ def index():
     posts = session.query(Post).all()
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
-    send_info.delay()
-    # send_info()
     return success(data=data)
 
 

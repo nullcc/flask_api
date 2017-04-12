@@ -8,6 +8,7 @@ from werkzeug.utils import find_modules, import_string
 
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery)
+
 from celery import Celery
 
 APP_NAME = 'FLASK_API'
@@ -24,6 +25,7 @@ def create_app(conf=None):
                    later overwrite it from the ENVVAR.
     """
     global config
+    global celery_
     app = Flask(APP_NAME, template_folder='templates')
     config = {}
     [config.__setitem__(k, getattr(conf, k)) for k in dir(conf) if not k.startswith('_')]
@@ -74,9 +76,7 @@ def configure_celery_app(app, celery):
     :param celery: celery实例
     :return:
     """
-    app.config.update({'BROKER_URL': app.config["CELERY_BROKER_URL"]})
     celery.conf.update(app.config)
-
     TaskBase = celery.Task
 
     class ContextTask(TaskBase):

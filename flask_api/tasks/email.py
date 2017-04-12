@@ -6,16 +6,16 @@ from flask_api.extensions import mail, celery
 
 
 @celery.task
-def send_info():
+def send_welcome_email(email):
     """
     发送信息
     :return:
     """
-    subject = 'Info'
-    content = 'hello world!'
+    subject = '欢迎使用本系统！'
+    content = '这是一封欢迎邮件，欢迎使用本系统！'
     send_email(
         subject=subject,
-        recipients=['89715089@qq.com'],
+        recipients=[email],
         text_body=content,
         html_body=''
     )

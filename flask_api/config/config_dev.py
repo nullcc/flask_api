@@ -29,7 +29,7 @@ class Config(object):
     MAIL_USE_TLS = False
     MAIL_USERNAME = 'zhangjinyi_ruby@163.com'
     MAIL_PASSWORD = 'baicycle2017'
-    MAIL_DEFAULT_SENDER = ('Default Sender', 'zhangjinyi_ruby@163.com')
+    MAIL_DEFAULT_SENDER = ('系统自动邮件', 'zhangjinyi_ruby@163.com')
     ADMINS = ['89715089@qq.com', 'nullcc@gmail.com']
 
     # 错误日志发送配置
@@ -38,18 +38,11 @@ class Config(object):
     ERROR_LOG = "error.log"
 
     # Redis
-    # ------------------------------ #
-    # If redis is enabled, it can be used for:
-    #   - Sending non blocking emails via Celery (Task Queue)
-    #   - Caching
-    #   - Rate Limiting
     REDIS_ENABLED = False
-    REDIS_URL = "redis://localhost:6379"  # or with a password: "redis://:password@localhost:6379"
+    REDIS_URL = "redis://localhost:6379"
     REDIS_DATABASE = 0
 
     # Celery
-    CELERY_BROKER_URL = 'redis://localhost:6379'
-    CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-    if not REDIS_ENABLED:
-        CELERY_ALWAYS_EAGER = True
-
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    BROKER_URL = 'redis://localhost:6379/0'
