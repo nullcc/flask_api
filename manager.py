@@ -4,7 +4,6 @@
 from flask_api.app import create_app
 from flask_api.config.config_dev import Config
 
-
 app = create_app(Config)
 
 if __name__ == '__main__':

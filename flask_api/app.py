@@ -5,11 +5,9 @@ import logging
 from flask import Flask
 from mako.template import Template
 from werkzeug.utils import find_modules, import_string
-
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery)
 
-from celery import Celery
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -25,7 +23,6 @@ def create_app(conf=None):
                    later overwrite it from the ENVVAR.
     """
     global config
-    global celery_
     app = Flask(APP_NAME, template_folder='templates')
     config = {}
     [config.__setitem__(k, getattr(conf, k)) for k in dir(conf) if not k.startswith('_')]
@@ -39,6 +36,7 @@ def create_app(conf=None):
     # configure_before_handlers(app)
     configure_error_handlers(app)
     configure_logging(app)
+    configure_db(app)
 
     return app
 
@@ -122,6 +120,16 @@ def configure_extensions(app):
 
     # Flask-Redis
     redis_store.init_app(app)
+
+
+def configure_db(app):
+    from flask_api.database import init_db, db_session
+    init_db()
+
+    @app.teardown_request
+    def shutdown_session(exception=None):
+        print('shutdown_session')
+        db_session.remove()
 
 
 def configure_logging(app):

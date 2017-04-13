@@ -4,7 +4,8 @@
 import json
 from flask import Blueprint, g, request, current_app as app
 from mako.template import Template
-from ..models.post import Post, DBSession
+from ..models.post import Post
+from ..database import db_session
 from ..utils.http import success, failed
 
 bp = Blueprint('posts', __name__)
@@ -17,7 +18,7 @@ def new():
 
 @bp.route('', methods=['GET'])
 def index():
-    session = DBSession()
+    session = db_session()
     posts = session.query(Post).all()
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
@@ -28,7 +29,7 @@ def index():
 def create():
     title = request.values.get("title")
     content = request.values.get("content")
-    session = DBSession()
+    session = db_session()
     new_post = Post(title=title, content=content)
     session.add(new_post)
     session.commit()

@@ -3,8 +3,6 @@
 
 import json
 from flask import Blueprint, g, request, current_app as app
-from mako.template import Template
-from ..models.post import Post, DBSession
 from ..utils.http import success, failed
 from flask_api.tasks.email import send_welcome_email
 

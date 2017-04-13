@@ -3,18 +3,8 @@
 from flask import url_for
 from flask_api.extensions import db
 from flask_api.utils.database import CRUDMixin
-from sqlalchemy import Column, String, create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from .. import app
-
-Base = declarative_base()
-
-
-def to_dict(self):
-    return {c.name: getattr(self, c.name, None) for c in self.__table__.columns}
-
-Base.to_dict = to_dict
+from sqlalchemy import Column, String
+from ..database import Base
 
 
 class Post(Base, CRUDMixin):
@@ -28,6 +18,3 @@ class Post(Base, CRUDMixin):
         self.title = title
         self.content = content
 
-
-engine = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'))
-DBSession = sessionmaker(bind=engine)
