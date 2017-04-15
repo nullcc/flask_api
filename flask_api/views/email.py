@@ -13,5 +13,6 @@ bp = Blueprint('email', __name__)
 def index():
     email = request.values.get("email")
     send_welcome_email.delay(email)
+    app.logger.debug("hello world!")
     return success()
 

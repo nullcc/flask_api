@@ -22,6 +22,7 @@ def index():
     posts = session.query(Post).all()
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
+    app.logger.info('hi')
     return success(data=data)
 
 

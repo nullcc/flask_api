@@ -7,6 +7,9 @@ class Config(object):
     # 调试模式
     DEBUG = True
 
+    # secret key
+    SECRET_KEY = 'secret key'
+
     # 运行端口号
     PORT = 5000
 
@@ -34,6 +37,7 @@ class Config(object):
 
     # 错误日志发送配置
     SEND_LOGS = True
+    DEBUG_LOG = "debug.log"
     INFO_LOG = "info.log"
     ERROR_LOG = "error.log"
 
@@ -46,3 +50,6 @@ class Config(object):
     CELERY_BROKER_URL = 'redis://localhost:6379/0'
     CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
     BROKER_URL = 'redis://localhost:6379/0'
+
+    # 显示SQL执行情况
+    SQLALCHEMY_ECHO = True
