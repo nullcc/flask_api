@@ -128,7 +128,6 @@ def configure_db(app):
 
     @app.teardown_request
     def shutdown_session(exception=None):
-        print('shutdown_session')
         db_session.remove()
 
 
@@ -138,6 +137,9 @@ def configure_logging(app):
     :param app:  app实例
     :return:
     """
+    if app.config.get('TESTING', None):  # 跑测试的时候不配置日志
+        return
+
     logs_folder = os.path.join(app.root_path, os.pardir, "flask_api/flask_api/logs")
     from logging.handlers import SMTPHandler
     formatter = logging.Formatter(

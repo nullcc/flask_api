@@ -2,6 +2,7 @@ Flask==0.12.1
 Flask-SQLAlchemy==2.2
 Flask-Mail==0.9.1
 Flask-Redis==0.3.0
+Flask-Testing==0.6.2
 Mako==1.0.6
 celery==4.0.2
 celery-with-redis>=3.0
