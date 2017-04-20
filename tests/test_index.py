@@ -11,10 +11,10 @@ from flask_api.config.config_dev import Config
 Config.TESTING = True
 
 
-class PostTest(TestCase):
+class IndexTest(TestCase):
 
     """
-    post接口测试
+    公共接口测试
     """
 
     @staticmethod
@@ -22,8 +22,6 @@ class PostTest(TestCase):
         app = create_app(Config)
         return app
 
-    def test_posts(self):
-        rv = self.client.get('/posts')
+    def test_index(self):
+        rv = self.client.get('/')
         assert rv.json['success']
-        assert rv.json['data'] is not None
-        assert rv.json['data'].get('posts') is not None

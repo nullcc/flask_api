@@ -66,7 +66,10 @@ def register_blueprints(root, app):
         if hasattr(mod, 'bp'):
             urls = name.split('.')
             # prefix = '/{}/{}'.format(urls[-2], urls[-1])
-            prefix = '/{}'.format(urls[-1])
+            if hasattr(mod, 'prefix'):
+                prefix = mod.prefix
+            else:
+                prefix = '/{}'.format(urls[-1])
             app.register_blueprint(mod.bp, url_prefix=prefix)
 
 
