@@ -5,7 +5,7 @@ import logging
 import time
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from flask import Flask, render_template
+from flask import Flask, g, render_template
 from werkzeug.utils import find_modules, import_string
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery)
@@ -31,7 +31,7 @@ def create_app(conf=None):
     configure_extensions(app)
     # configure_template_filters(app)
     # configure_context_processors(app)
-    # configure_before_handlers(app)
+    configure_request_filter_handlers(app)
     configure_error_handlers(app)
     configure_logging(app)
     configure_db(app)
@@ -87,6 +87,31 @@ def configure_celery_app(app, celery):
                 return TaskBase.__call__(self, *args, **kwargs)
 
     celery.Task = ContextTask
+
+
+def configure_request_filter_handlers(app):
+    """
+    配置请求过滤器
+    :param app:  app实例
+    :return:
+    """
+
+    @app.before_request
+    def before_request():
+        print('before request handler')
+        # your before request code...
+
+    @app.after_request
+    def after_request(response):
+        print('after request handler')
+        # your after request code...
+        return response
+
+    @app.teardown_request
+    def teardown_request(response):
+        print('teardown request handler')
+        # your teardown request code...
+        return response
 
 
 def configure_error_handlers(app):
