@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from flask import Blueprint, g, request, current_app as app
-from mako.template import Template
+from flask import Blueprint, g, request, render_template, current_app as app
 from ..models.post import Post
 from ..database import db_session
 from ..utils.http import success, failed
@@ -13,7 +12,7 @@ bp = Blueprint('posts', __name__)
 
 @bp.route('/new', methods=['GET'])
 def new():
-    return Template(filename='./flask_api/templates/post/new.html').render()
+    return render_template('post/new.html')
 
 
 @bp.route('', methods=['GET'])

@@ -53,3 +53,6 @@ class Config(object):
 
     # 显示SQL执行情况
     SQLALCHEMY_ECHO = False
+
+    # 国际化本地语言
+    BABEL_DEFAULT_LOCALE = 'zh_Hans_CN'  # en_US ja_JP

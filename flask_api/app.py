@@ -5,12 +5,11 @@ import logging
 import time
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from flask import Flask
-from mako.template import Template
+from flask import Flask, render_template
 from werkzeug.utils import find_modules, import_string
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery)
-
+from flask_babelplus import Babel
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -18,15 +17,11 @@ config = None
 
 def create_app(conf=None):
     """
-    创建flask app.
-    :param conf: The configuration file or object.
-                   The environment variable is weightet as the heaviest.
-                   For example, if the config is specified via an file
-                   and a ENVVAR, it will load the config via the file and
-                   later overwrite it from the ENVVAR.
+    创建flask app
     """
     global config
-    app = Flask(APP_NAME, template_folder='templates')
+    app = Flask(APP_NAME, template_folder='flask_api/templates')
+
     config = {}
     [config.__setitem__(k, getattr(conf, k)) for k in dir(conf) if not k.startswith('_')]
 
@@ -40,6 +35,8 @@ def create_app(conf=None):
     configure_error_handlers(app)
     configure_logging(app)
     configure_db(app)
+
+    babel = Babel(app)
 
     return app
 
@@ -65,7 +62,6 @@ def register_blueprints(root, app):
         mod = import_string(name)
         if hasattr(mod, 'bp'):
             urls = name.split('.')
-            # prefix = '/{}/{}'.format(urls[-2], urls[-1])
             if hasattr(mod, 'prefix'):
                 prefix = mod.prefix
             else:
@@ -101,15 +97,15 @@ def configure_error_handlers(app):
     """
     @app.errorhandler(403)
     def forbidden_page(error):
-        return Template(filename='./flask_api/templates/errors/forbidden_page.html').render(), 403
+        return render_template('errors/forbidden_page.html'), 403
 
     @app.errorhandler(404)
     def page_not_found(error):
-        return Template(filename='./flask_api/templates/errors/page_not_found.html').render(), 404
+        return render_template('errors/page_not_found.html'), 404
 
     @app.errorhandler(500)
     def server_error_page(error):
-        return Template(filename='./flask_api/templates/errors/server_error.html').render(), 500
+        return render_template('errors/server_error.html'), 500
 
 
 def configure_extensions(app):
@@ -187,7 +183,6 @@ def configure_logging(app):
         app.logger.addHandler(debug_file_handler)
 
     if app.config["SEND_LOGS"]:
-        print('setup smtp server')
         mail_handler = \
             SMTPHandler(
                 app.config['MAIL_SERVER'],
