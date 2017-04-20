@@ -30,7 +30,7 @@ def create_app(conf=None):
     configure_celery_app(app, celery)
     configure_extensions(app)
     # configure_template_filters(app)
-    # configure_context_processors(app)
+    configure_context_processors(app)
     configure_request_filter_handlers(app)
     configure_error_handlers(app)
     configure_logging(app)
@@ -87,6 +87,23 @@ def configure_celery_app(app, celery):
                 return TaskBase.__call__(self, *args, **kwargs)
 
     celery.Task = ContextTask
+
+
+def configure_context_processors(app):
+    """
+    配置上下文处理器，返回的字典中的变量会被注入到模版中
+    :param app:  app实例
+    :return:
+    """
+
+    @app.context_processor
+    def inject_user_info():
+        """
+        注入用户基本信息
+        :return:
+        """
+        user = {'name': 'nullcc'}
+        return dict(user=user)
 
 
 def configure_request_filter_handlers(app):
