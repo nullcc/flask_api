@@ -4,5 +4,7 @@ Flask-Mail==0.9.1
 Flask-Redis==0.3.0
 Flask-Testing==0.6.2
 Flask-BabelPlus==1.0.1
+Flask-Migrate==2.0.3
+Flask-Script==2.0.5
 celery==4.0.2
 celery-with-redis>=3.0

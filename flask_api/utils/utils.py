@@ -1,3 +1,11 @@
+import datetime
+
 
 def to_dict(self):
-    return {c.name: getattr(self, c.name, None) for c in self.__table__.columns}
+    res = dict()
+    for c in self.__table__.columns:
+        if isinstance(getattr(self, c.name, None), datetime.datetime):
+            res[c.name] = getattr(self, c.name, None).__str__()
+        else:
+            res[c.name] = getattr(self, c.name, None)
+    return res

@@ -26,10 +26,11 @@ def index():
 
 @bp.route('', methods=['POST'])
 def create():
+    user_id = request.values.get("user_id")
     title = request.values.get("title")
     content = request.values.get("content")
     session = db_session()
-    new_post = Post(title=title, content=content)
+    new_post = Post(user_id=user_id, title=title, content=content)
     session.add(new_post)
     session.commit()
     session.close()
