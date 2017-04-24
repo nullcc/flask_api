@@ -3,6 +3,7 @@
 
 import json
 from flask import Blueprint, g, request, render_template, current_app as app
+from flask_cors import cross_origin
 from ..models.post import Post
 from ..database import db_session
 from ..utils.http import success, failed

@@ -9,8 +9,9 @@ from flask import Flask, g, render_template
 from werkzeug.utils import find_modules, import_string
 from flask_babelplus import Babel
 # 应用扩展
-from flask_api.extensions import (db, mail, redis_store, celery, cache)
-
+from flask_api.extensions import (db, mail, redis_store, celery, cache, limiter,
+                                  cors)
+# from .models.user import User
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -168,6 +169,36 @@ def configure_extensions(app):
 
     # Flask-Cache
     cache.init_app(app)
+
+    # Flask-Limiter
+    limiter.init_app(app)
+
+    # Flask-Cors
+    if app.config.get('ALLOW_GLOBAL_CORS'):
+        cors.init_app(app)
+
+    # # Flask-Login
+    # login_manager.login_view = app.config["LOGIN_VIEW"]
+    # login_manager.refresh_view = app.config["REAUTH_VIEW"]
+    # login_manager.login_message_category = app.config["LOGIN_MESSAGE_CATEGORY"]
+    # login_manager.needs_refresh_message_category = \
+    #     app.config["REFRESH_MESSAGE_CATEGORY"]
+    # login_manager.anonymous_user = Guest
+    #
+    # @login_manager.user_loader
+    # def load_user(user_id):
+    #     """
+    #     从数据库加载用户信息
+    #     :param user_id:
+    #     :return:
+    #     """
+    #     user_instance = User.query.filter_by(id=user_id).first()
+    #     if user_instance:
+    #         return user_instance
+    #     else:
+    #         return None
+    #
+    # login_manager.init_app(app)
 
 
 def configure_db(app):

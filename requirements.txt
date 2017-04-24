@@ -7,5 +7,8 @@ Flask-BabelPlus==1.0.1
 Flask-Migrate==2.0.3
 Flask-Script==2.0.5
 Flask-Cache==0.13.1
+Flask-Login==0.4.0
+Flask-Limiter==0.9.3
+Flask-Cors==3.0.2
 celery==4.0.2
 celery-with-redis>=3.0

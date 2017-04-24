@@ -46,6 +46,7 @@ class Config(object):
     REDIS_URL = "redis://localhost:6379"
     REDIS_DATABASE = 0
 
+    # flask_cache配置
     CACHE_TYPE = "redis"
     CACHE_DEFAULT_TIMEOUT = 60
 
@@ -59,3 +60,6 @@ class Config(object):
 
     # 国际化本地语言
     BABEL_DEFAULT_LOCALE = 'en_US'  # en_US ja_JP zh_Hans_CN
+
+    # 允许全局CORS
+    ALLOW_GLOBAL_CORS = True

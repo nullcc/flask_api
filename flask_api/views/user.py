@@ -3,15 +3,19 @@
 
 import json
 from flask import Blueprint, g, request, render_template, current_app as app
+from flask_cors import cross_origin
 from ..models.user import User
 from ..database import db_session
 from ..utils.http import success, failed
-from ..extensions import redis_store
+from ..extensions import redis_store, limiter
+
 
 bp = Blueprint('user', __name__)
 
 
 @bp.route('/<int:user_id>', methods=['GET'])
+@limiter.limit("5 per minute")
+@cross_origin()
 def show(user_id):
     session = db_session()
     user = session.query(User).get(user_id)
@@ -19,14 +23,11 @@ def show(user_id):
     posts = [post.to_dict() for post in user_posts]
     user = user.to_dict()
     user['user_posts'] = posts
-
-    p = redis_store.pipeline()
-    p.set('user_' + str(user_id), 'abc')
-    p.execute()
-
-    p.get('user_2')
-
-    print(p.execute())
+    # p = redis_store.pipeline()
+    # p.set('user_' + str(user_id), 'abc')
+    # p.execute()
+    # p.get('user_2')
+    # print(p.execute())
     return success(user=user)
 
 
