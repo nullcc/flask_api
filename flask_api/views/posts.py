@@ -6,6 +6,7 @@ from flask import Blueprint, g, request, render_template, current_app as app
 from ..models.post import Post
 from ..database import db_session
 from ..utils.http import success, failed
+from ..extensions import cache
 
 bp = Blueprint('posts', __name__)
 
@@ -16,6 +17,7 @@ def new():
 
 
 @bp.route('', methods=['GET'])
+@cache.cached(timeout=60, key_prefix='posts')
 def index():
     session = db_session()
     posts = session.query(Post).all()

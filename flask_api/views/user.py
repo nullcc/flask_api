@@ -6,6 +6,7 @@ from flask import Blueprint, g, request, render_template, current_app as app
 from ..models.user import User
 from ..database import db_session
 from ..utils.http import success, failed
+from ..extensions import redis_store
 
 bp = Blueprint('user', __name__)
 
@@ -18,6 +19,14 @@ def show(user_id):
     posts = [post.to_dict() for post in user_posts]
     user = user.to_dict()
     user['user_posts'] = posts
+
+    p = redis_store.pipeline()
+    p.set('user_' + str(user_id), 'abc')
+    p.execute()
+
+    p.get('user_2')
+
+    print(p.execute())
     return success(user=user)
 
 

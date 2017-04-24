@@ -7,9 +7,10 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from flask import Flask, g, render_template
 from werkzeug.utils import find_modules, import_string
-# 应用扩展
-from flask_api.extensions import (db, mail, redis_store, celery)
 from flask_babelplus import Babel
+# 应用扩展
+from flask_api.extensions import (db, mail, redis_store, celery, cache)
+
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -165,6 +166,9 @@ def configure_extensions(app):
     # Flask-Redis
     redis_store.init_app(app)
 
+    # Flask-Cache
+    cache.init_app(app)
+
 
 def configure_db(app):
     from flask_api.database import init_db, db_session
@@ -181,7 +185,7 @@ def configure_logging(app):
     :param app:  app实例
     :return:
     """
-    if app.config.get('TESTING', None):  # 跑测试的时候不配置日志
+    if app.config.get('TESTING', None):  # 运行测试的时候不配置日志
         return
 
     logs_folder = os.path.join(app.root_path, os.pardir, "flask_api/logs")

@@ -23,6 +23,7 @@ class CRUDMixin(object):
         db.session.commit()
         return self
 
+
 class UTCDateTime(db.TypeDecorator):
     impl = db.DateTime
 

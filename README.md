@@ -64,3 +64,4 @@
 
     python migrate.py db migrate -m "migrate message"
     python migrate.py db upgrade
+    
