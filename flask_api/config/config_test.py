@@ -63,3 +63,6 @@ class Config(object):
 
     # 允许全局CORS
     ALLOW_GLOBAL_CORS = True
+
+    # Flask-Session
+    SESSION_TYPE = 'redis'

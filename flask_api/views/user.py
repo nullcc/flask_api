@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from flask import Blueprint, g, request, render_template, current_app as app
+from flask import Blueprint, g, request, render_template, session as sess, current_app as app
 from flask_cors import cross_origin
 from ..models.user import User
 from ..database import db_session
@@ -28,6 +28,7 @@ def show(user_id):
     # p.execute()
     # p.get('user_2')
     # print(p.execute())
+    sess['_session_id'] = 'flask_api_session_1'
     return success(user=user)
 
 

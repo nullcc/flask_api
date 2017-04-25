@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from flask import Blueprint, g, request, render_template, current_app as app
+from flask import Blueprint, g, request, render_template, session as sess, current_app as app
 from flask_cors import cross_origin
 from ..models.post import Post
 from ..database import db_session
@@ -24,6 +24,7 @@ def index():
     posts = session.query(Post).all()
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
+    print(sess.get('_session_id', 'not set'))
     return success(data=data)
 
 
