@@ -10,7 +10,7 @@ from werkzeug.utils import find_modules, import_string
 from flask_babelplus import Babel
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
-                                  limiter, cors, session)
+                                  limiter, cors, session, scheduler)
 
 
 APP_NAME = 'FLASK_API'
@@ -179,6 +179,10 @@ def configure_extensions(app):
 
     # Flask-Session
     session.init_app(app)
+
+    # Flask-APScheduler
+    scheduler.init_app(app)
+    scheduler.start()
 
     # # Flask-Login
     # login_manager.login_view = app.config["LOGIN_VIEW"]

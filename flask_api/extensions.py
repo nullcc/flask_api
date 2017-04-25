@@ -14,6 +14,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS, cross_origin
 from flask_session import Session
+from flask_apscheduler import APScheduler
 from flask import current_app as app
 
 # Database
@@ -42,3 +43,6 @@ cors = CORS()
 
 # Session
 session = Session()
+
+# APScheduler
+scheduler = APScheduler()

@@ -66,3 +66,13 @@ class Config(object):
 
     # Flask-Session
     SESSION_TYPE = 'redis'
+
+    JOBS = [
+        {
+            'id': 'job1',
+            'func': 'flask_api.tasks.job:job1',
+            # 'args': (1, 2),
+            'trigger': 'interval',
+            'seconds': 5
+        }
+    ]
