@@ -56,3 +56,6 @@ class User(Base, CRUDMixin):
         return Post.query.\
             filter(Post.user_id == self.id).\
             order_by(Post.id.desc()).all()
+
+    def get_id(self):
+        return self.id

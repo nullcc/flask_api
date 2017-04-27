@@ -4,11 +4,14 @@
 import json
 from flask import Blueprint, g, request, session as sess, current_app as app
 from flask_cors import cross_origin
+from flask_login import login_user, current_user
 from ..models.user import User
 from ..database import db_session
 from ..utils.http import success, failed
 from ..extensions import redis_store, limiter
-
+from ..biz.user import get_user
+from ..extensions import allows
+from ..validators.permission import is_user, is_admin
 
 bp = Blueprint('user', __name__)
 
@@ -16,9 +19,10 @@ bp = Blueprint('user', __name__)
 @bp.route('/<int:user_id>', methods=['GET'])
 @limiter.limit("5 per minute")
 @cross_origin()
+@allows.requires(is_user)
 def show(user_id):
     """
-    演示limiter,session
+    演示limiter,session,allows
     :param user_id:
     :return:
     """
@@ -58,3 +62,18 @@ def create():
     session.commit()
     session.close()
     return success()
+
+
+@bp.route('/login', methods=['POST'])
+def login():
+    """
+    用户登录
+    :return:
+    """
+    username = request.values["username"]
+    password = request.values["password"]
+    user = get_user(username, password)
+    if user:
+        login_user(user)
+        return success(data=user.to_dict())
+    return failed(message='用户名或密码错误')

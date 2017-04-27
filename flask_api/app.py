@@ -10,7 +10,7 @@ from werkzeug.utils import find_modules, import_string
 from flask_babelplus import Babel
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
-                                  limiter, cors, session, scheduler)
+                                  limiter, cors, session, scheduler, allows)
 
 
 APP_NAME = 'FLASK_API'
@@ -118,6 +118,7 @@ def configure_request_filter_handlers(app):
     @app.before_request
     def before_request():
         print('before request handler')
+        login_manager.reload_user()
         # your before request code...
 
     @app.after_request
@@ -194,6 +195,7 @@ def configure_extensions(app):
 
     @login_manager.user_loader
     def load_user(user_id):
+        print('---load_user---')
         """
         从数据库加载用户信息
         :param user_id:
@@ -202,11 +204,16 @@ def configure_extensions(app):
         from flask_api.models.user import User
         user_instance = User.query.filter_by(id=user_id).first()
         if user_instance:
+            g.user = user_instance
             return user_instance
         else:
+            g.user = None
             return None
 
     login_manager.init_app(app)
+
+    # Flask-Allows
+    allows.init_app(app)
 
 
 def configure_db(app):
