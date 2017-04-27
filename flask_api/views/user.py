@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from flask import Blueprint, g, request, render_template, session as sess, current_app as app
+from flask import Blueprint, g, request, session as sess, current_app as app
 from flask_cors import cross_origin
 from ..models.user import User
 from ..database import db_session
@@ -17,6 +17,11 @@ bp = Blueprint('user', __name__)
 @limiter.limit("5 per minute")
 @cross_origin()
 def show(user_id):
+    """
+    演示limiter,session
+    :param user_id:
+    :return:
+    """
     session = db_session()
     user = session.query(User).get(user_id)
     user_posts = user.all_posts()
@@ -34,6 +39,10 @@ def show(user_id):
 
 @bp.route('', methods=['POST'])
 def create():
+    """
+    创建用户
+    :return:
+    """
     username = request.values.get("username")
     password = request.values.get("password")
     email = request.values.get("email")

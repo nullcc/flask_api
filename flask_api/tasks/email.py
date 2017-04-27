@@ -4,7 +4,6 @@
     发送邮件任务
 """
 
-from flask import render_template
 from flask_mail import Message
 from flask_api.extensions import mail, celery
 

@@ -66,3 +66,17 @@ class Config(object):
 
     # Flask-Session
     SESSION_TYPE = 'redis'
+
+    # Flask-APScheduler
+    SCHEDULER_API_ENABLED = True
+
+    # Flask-APScheduler Jobs
+    JOBS = [
+        {
+            'id': 'job1',
+            'func': 'flask_api.tasks.job:job1',
+            # 'args': (1, 2),
+            'trigger': 'interval',
+            'seconds': 5
+        }
+    ]
