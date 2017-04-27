@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class Config(object):
+class DevConfig(object):
 
     # 调试模式
     DEBUG = True

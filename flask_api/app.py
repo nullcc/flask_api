@@ -195,7 +195,6 @@ def configure_extensions(app):
 
     @login_manager.user_loader
     def load_user(user_id):
-        print('---load_user---')
         """
         从数据库加载用户信息
         :param user_id:
