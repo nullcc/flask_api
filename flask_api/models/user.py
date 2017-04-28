@@ -27,12 +27,12 @@ class User(Base, CRUDMixin):
 
     posts = db.relationship("Post", backref="user", lazy="dynamic")
 
-    def __init__(self, username, password_hash, email, gender, desc):
+    def __init__(self, username, password_hash, email, gender):
         self.username = username
         self.password_hash = password_hash
         self.email = email
         self.gender = gender
-        self.desc = desc
+        self.desc = ''
         self.credit = 0
         self.role = 'user'
         self.status = 1

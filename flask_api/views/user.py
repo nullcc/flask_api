@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from werkzeug.security import generate_password_hash
 from flask import Blueprint, g, request, session as sess, current_app as app
 from flask_cors import cross_origin
 from flask_login import login_user, current_user
@@ -41,26 +42,23 @@ def show(user_id):
     return success(user=user)
 
 
-@bp.route('', methods=['POST'])
+@bp.route('/register', methods=['POST'])
 def create():
     """
-    创建用户
+    用户注册
     :return:
     """
     username = request.values.get("username")
     password = request.values.get("password")
     email = request.values.get("email")
     gender = int(request.values.get("gender"))
-    desc = request.values.get("desc")
-    session = db_session()
+
+    password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
     user = User(username=username,
-                password_hash=password,
+                password_hash=password_hash,
                 email=email,
-                gender=gender,
-                desc=desc)
-    session.add(user)
-    session.commit()
-    session.close()
+                gender=gender)
+    user.save()
     return success()
 
 
