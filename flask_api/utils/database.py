@@ -14,14 +14,21 @@ class CRUDMixin(object):
         return instance.save()
 
     def save(self):
-        """Saves the object to the database."""
+        """
+        保存对象到数据库
+        :return:
+        """
         db.session.add(self)
         db.session.commit()
         model_saved.send(app._get_current_object())
+        # db.session.close()
         return self
 
     def delete(self):
-        """Delete the object from the database."""
+        """
+        从数据库中删除对象
+        :return:
+        """
         db.session.delete(self)
         db.session.commit()
         return self

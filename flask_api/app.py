@@ -134,7 +134,7 @@ def configure_request_filter_handlers(app):
 
     @app.teardown_request
     def teardown_request(response):
-        print('teardown request handler')
+        db.session.close()  # 关闭db session
         # your teardown request code...
         return response
 

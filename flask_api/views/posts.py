@@ -47,3 +47,14 @@ def create():
     new_post = Post(user_id=user_id, title=title, content=content)
     new_post.save()
     return success()
+
+
+@bp.route('/sql', methods=['GET'])
+def sql():
+    """
+    演示直接执行sql
+    :return:
+    """
+    posts = db_session.execute("select * from posts where user_id = :user_id", {"user_id": 1}).fetchall()
+    print(posts)
+    return success()
