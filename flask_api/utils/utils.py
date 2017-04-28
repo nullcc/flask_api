@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import random
 
 
 def to_dict(self):
@@ -17,3 +18,9 @@ def to_dict(self):
         else:
             res[c.name] = getattr(self, c.name, None)
     return res
+
+
+# 生成指定长度的0-9串
+def gen_random_number_string(key_len):
+    key_list = [random.choice("0123456789") for i in range(key_len)]
+    return "".join(key_list)
