@@ -10,7 +10,6 @@ from ..models.user import User
 from ..database import db_session
 from ..utils.http import success, failed
 from ..extensions import redis_store, limiter
-from ..biz.user import get_user
 from ..extensions import allows
 from ..validators.permission import is_user, is_admin
 
@@ -70,7 +69,7 @@ def login():
     """
     username = request.values["username"]
     password = request.values["password"]
-    user = get_user(username, password)
+    user = User.authenticate(username, password)
     if user:
         login_user(user)
         return success(data=user.to_dict())

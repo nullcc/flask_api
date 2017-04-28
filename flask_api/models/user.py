@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from werkzeug.security import check_password_hash
 from flask import url_for
 from flask_api.extensions import db
 from flask_api.utils.helpers import time_utcnow
@@ -42,15 +43,33 @@ class User(Base, CRUDMixin):
     # Properties
     @property
     def is_active(self):
+        """
+        用户状态是否有效
+        :return:
+        """
         return self.status == 1
 
     @property
     def is_admin(self):
+        """
+        用户是否是管理员
+        :return:
+        """
         return self.role == 'admin'
 
     @classmethod
     def authenticate(cls, username, password):
-        pass
+        """
+        用户认证
+        :param username:
+        :param password:
+        :return:
+        """
+        session = db_session()
+        user = session.query(User).filter_by(username=username).first()
+        if user and user._verify_password(password):
+            return user
+        return None
 
     def all_posts(self):
         return Post.query.\
@@ -59,3 +78,11 @@ class User(Base, CRUDMixin):
 
     def get_id(self):
         return self.id
+
+    def _verify_password(self, password):
+        """
+        验证用户密码
+        :param password:
+        :return:
+        """
+        return check_password_hash(self.password_hash, password)
