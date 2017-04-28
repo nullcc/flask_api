@@ -30,10 +30,10 @@ class TestConfig(object):
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    MAIL_USERNAME = 'zhangjinyi_ruby@163.com'
-    MAIL_PASSWORD = 'baicycle2017'
-    MAIL_DEFAULT_SENDER = ('系统自动邮件', 'zhangjinyi_ruby@163.com')
-    ADMINS = ['89715089@qq.com', 'nullcc@gmail.com']
+    MAIL_USERNAME = 'YOUR EMAIL'
+    MAIL_PASSWORD = 'YOUR EMAIL PASSWORD'
+    MAIL_DEFAULT_SENDER = ('系统自动邮件', 'YOUR EMAIL')
+    ADMINS = []
 
     # 错误日志发送配置
     SEND_LOGS = True
@@ -71,12 +71,12 @@ class TestConfig(object):
     SCHEDULER_API_ENABLED = True
 
     # Flask-APScheduler Jobs
-    JOBS = [
-        {
-            'id': 'job1',
-            'func': 'flask_api.tasks.job:job1',
-            # 'args': (1, 2),
-            'trigger': 'interval',
-            'seconds': 5
-        }
-    ]
+    # JOBS = [
+    #     {
+    #         'id': 'job1',
+    #         'func': 'flask_api.tasks.job:job1',
+    #         # 'args': (1, 2),
+    #         'trigger': 'interval',
+    #         'seconds': 5
+    #     }
+    # ]

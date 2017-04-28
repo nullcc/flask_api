@@ -12,6 +12,9 @@ from flask_babelplus import Babel
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
                                   limiter, cors, session, scheduler, allows)
 
+from flask import (template_rendered, request_started, request_finished,
+                   got_request_exception, request_tearing_down)
+from flask_api.utils.signals import model_saved
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -39,6 +42,8 @@ def create_app(conf=None):
     configure_db(app)
 
     babel = Babel(app)
+
+    configure_signals(app)
 
     return app
 
@@ -299,3 +304,42 @@ def configure_logging(app):
                                  parameters, context, executemany):
             total = time.time() - conn.info['query_start_time'].pop(-1)
             app.logger.debug("Total Time: %f", total)
+
+
+def configure_signals(app):
+    """
+    配置信号
+    :param app:
+    :return:
+    """
+    # 模版渲染信号
+    @template_rendered.connect_via(app)
+    def log_template_renders(sender, template, context, **extra):
+        sender.logger.debug('Rendering template "%s" with context %s',
+                         template.name or 'string template',
+                         context)
+
+    # 请求开始信号
+    @request_started.connect_via(app)
+    def log_request(sender, **extra):
+        sender.logger.debug('Request context is set up')
+
+    # 请求结束信号
+    @request_finished.connect_via(app)
+    def log_response(sender, response, **extra):
+        sender.logger.debug('Request context is about to close down.  '
+                            'Response: %s', response)
+
+    # 请求异常信号
+    @got_request_exception.connect_via(app)
+    def log_exception(sender, exception, **extra):
+        sender.logger.debug('Got exception during processing: %s', exception)
+
+    # 请求销毁信号
+    @request_tearing_down.connect_via(app)
+    def log_request_tearing_down(sender, **extra):
+        sender.logger.debug('request tearing down')
+
+    @model_saved.connect_via(app)
+    def log_model_saved(sender, **extra):
+        sender.logger.debug('model_saved!')

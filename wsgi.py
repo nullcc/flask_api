@@ -9,8 +9,6 @@ import os
 
 logger = logging.getLogger(__name__)
 
-logger.warning("start server")
-
 if os.environ.get("debug_mode", "False") == "True":
     logger.info("测试环境模式")
     config = TestConfig

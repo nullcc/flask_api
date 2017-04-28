@@ -1,5 +1,7 @@
 import pytz
 from flask_api.extensions import db
+from flask_api.utils.signals import model_saved
+from flask import current_app as app
 
 
 class CRUDMixin(object):
@@ -15,6 +17,7 @@ class CRUDMixin(object):
         """Saves the object to the database."""
         db.session.add(self)
         db.session.commit()
+        model_saved.send(app._get_current_object())
         return self
 
     def delete(self):
