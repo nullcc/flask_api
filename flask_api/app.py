@@ -8,6 +8,7 @@ from sqlalchemy.engine import Engine
 from flask import Flask, g, render_template
 from werkzeug.utils import find_modules, import_string
 from flask_babelplus import Babel
+from flask_sqlalchemy import get_debug_queries
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
                                   limiter, cors, session, scheduler, allows)
@@ -130,11 +131,19 @@ def configure_request_filter_handlers(app):
     def after_request(response):
         print('after request handler')
         # your after request code...
+        # 记录请求中的慢查询
+        for query in get_debug_queries():
+            if query.duration > app.config['DATABASE_QUERY_TIMEOUT']:
+                app.logger.warn(
+                    ('Context: {}\nSLOW QUERY: {}\nParameters: {}\n'
+                     'Duration: {}\n').format(query.context, query.statement, query.parameters, query.duration)
+                )
+
         return response
 
     @app.teardown_request
     def teardown_request(response):
-        db.session.close()  # 关闭db session
+        # db.session.close()  # 关闭db session
         # your teardown request code...
         return response
 
@@ -265,6 +274,17 @@ def configure_logging(app):
     error_file_handler.setLevel(logging.ERROR)
     error_file_handler.setFormatter(formatter)
     app.logger.addHandler(error_file_handler)
+
+    # 慢查询日志
+    slow_query_log = os.path.join(logs_folder, app.config['SLOW_QUERY_LOG'])
+    slow_query_file_handler = logging.handlers.RotatingFileHandler(
+        slow_query_log,
+        maxBytes=100000,
+        backupCount=10
+    )
+    slow_query_file_handler.setLevel(logging.WARN)
+    slow_query_file_handler.setFormatter(formatter)
+    app.logger.addHandler(slow_query_file_handler)
 
     # 调试日志
     if app.debug:

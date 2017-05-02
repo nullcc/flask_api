@@ -11,7 +11,7 @@ class TestConfig(object):
     SECRET_KEY = 'secret key'
 
     # 运行端口号
-    PORT = 5000
+    PORT = 5111
 
     # 数据库配置项
     DATABASE_HOST = '127.0.0.1'
@@ -25,6 +25,10 @@ class TestConfig(object):
         DATABASE_HOST,
         DATABASE_PORT,
         DATABASE_NAME)
+
+    # 数据库查询时间阈值
+    DATABASE_QUERY_TIMEOUT = 0.00001
+    SQLALCHEMY_RECORD_QUERIES = True
 
     # flask_mail配置
     MAIL_SERVER = 'smtp.163.com'
@@ -41,6 +45,7 @@ class TestConfig(object):
     DEBUG_LOG = "debug.log"
     INFO_LOG = "info.log"
     ERROR_LOG = "error.log"
+    SLOW_QUERY_LOG = "slow_query.log"
 
     # Redis
     REDIS_ENABLED = False
