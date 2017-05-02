@@ -27,7 +27,7 @@ class TestConfig(object):
         DATABASE_NAME)
 
     # 数据库查询时间阈值
-    DATABASE_QUERY_TIMEOUT = 0.00001
+    DATABASE_QUERY_TIMEOUT = 0.5
     SQLALCHEMY_RECORD_QUERIES = True
 
     # flask_mail配置
