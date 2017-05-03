@@ -16,6 +16,7 @@ from flask_cors import CORS, cross_origin
 from flask_session import Session
 from flask_apscheduler import APScheduler
 from flask_allows import Allows
+from flask_restful import Api
 from flask import g
 
 # Database
@@ -50,3 +51,6 @@ scheduler = APScheduler()
 
 # Flask-Allows
 allows = Allows(identity_loader=lambda: g.user)
+
+# Flask_RESTful
+api = Api()

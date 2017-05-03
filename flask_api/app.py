@@ -11,7 +11,7 @@ from flask_babelplus import Babel
 from flask_sqlalchemy import get_debug_queries
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
-                                  limiter, cors, session, scheduler, allows)
+                                  limiter, cors, session, scheduler, allows, api)
 
 from flask import (template_rendered, request_started, request_finished,
                    got_request_exception, request_tearing_down)
@@ -227,6 +227,9 @@ def configure_extensions(app):
 
     # Flask-Allows
     allows.init_app(app)
+
+    # Flask_RESTful
+    api.init_app(app)
 
 
 def configure_db(app):
