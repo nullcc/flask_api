@@ -66,4 +66,4 @@ toolbar = DebugToolbarExtension()
 babel = Babel()
 
 # Flask-Gzip
-gzip = Gzip()
+gzip = Gzip(compress_level=9)
