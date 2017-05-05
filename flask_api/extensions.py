@@ -18,6 +18,9 @@ from flask_apscheduler import APScheduler
 from flask_allows import Allows
 from flask_restful import Api
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_babelplus import Babel
+from .exts.flask_gzip import Gzip
+
 from flask import g
 
 # Database
@@ -58,3 +61,9 @@ api = Api()
 
 # Flask-Debugtoolbar
 toolbar = DebugToolbarExtension()
+
+# Flask-Babel
+babel = Babel()
+
+# Flask-Gzip
+gzip = Gzip()

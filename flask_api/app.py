@@ -7,12 +7,12 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from flask import Flask, g, render_template
 from werkzeug.utils import find_modules, import_string
-from flask_babelplus import Babel
 from flask_sqlalchemy import get_debug_queries
+# from flask_gzip import Gzip
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
                                   limiter, cors, session, scheduler, allows, api,
-                                  toolbar)
+                                  toolbar, babel, gzip)
 
 from flask import (template_rendered, request_started, request_finished,
                    got_request_exception, request_tearing_down)
@@ -42,8 +42,6 @@ def create_app(conf=None):
     configure_error_handlers(app)
     configure_logging(app)
     configure_db(app)
-
-    babel = Babel(app)
 
     configure_signals(app)
 
@@ -233,7 +231,13 @@ def configure_extensions(app):
     api.init_app(app)
 
     # Flask-Debugtoolbar
-    toolbar.init_app(app)
+    # toolbar.init_app(app)
+
+    # Flask-Babel
+    babel.init_app(app)
+
+    # Flask-Gzip
+    gzip.init_app(app)
 
 
 def configure_db(app):
