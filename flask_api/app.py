@@ -36,7 +36,7 @@ def create_app(conf=None):
     register_blueprints('flask_api.views', app)
     configure_celery_app(app, celery)
     configure_extensions(app)
-    # configure_template_filters(app)
+    configure_template_filters(app)
     configure_context_processors(app)
     configure_request_filter_handlers(app)
     configure_error_handlers(app)
@@ -104,13 +104,12 @@ def configure_context_processors(app):
     """
 
     @app.context_processor
-    def inject_user_info():
+    def template_extras():
         """
-        注入用户基本信息
+        注入通用信息到模版
         :return:
         """
-        user = {'name': 'nullcc'}
-        return dict(user=user)
+        return dict(current_user=g.user)
 
 
 def configure_request_filter_handlers(app):
@@ -240,7 +239,23 @@ def configure_extensions(app):
     gzip.init_app(app)
 
 
+def configure_template_filters(app):
+    """
+    配置模版过滤器
+    :param app:
+    :return:
+    """
+    @app.template_filter('capitalize')
+    def uppercase_filter(s):
+        return s.capitalize()
+
+
 def configure_db(app):
+    """
+    配置数据库
+    :param app:
+    :return:
+    """
     from flask_api.database import init_db, db_session
     init_db()
 
