@@ -7,6 +7,8 @@ from ..models.post import Post
 from ..database import db_session
 from ..utils.http import success
 from ..extensions import cache
+from ..biz.post import do_something, insert_post
+from ..utils.transaction import transaction
 
 bp = Blueprint('posts', __name__)
 
@@ -21,7 +23,7 @@ def new():
 
 
 @bp.route('', methods=['GET'])
-@cache.cached(timeout=60, key_prefix='posts')
+# @cache.cached(timeout=60, key_prefix='posts')
 def index():
     """
     演示cache
@@ -32,6 +34,7 @@ def index():
     posts = [post.to_dict() for post in posts]
     data = {'posts': posts}
     # print(sess.get('_session_id', 'not set'))
+    # do_something()
     return success(data=data)
 
 
@@ -46,15 +49,16 @@ def create():
     content = request.values.get("content")
     new_post = Post(user_id=user_id, title=title, content=content)
     new_post.save()
+    do_something()
     return success()
 
 
-@bp.route('/sql', methods=['GET'])
+@bp.route('/sql', methods=['POST'])
+@transaction()
 def sql():
     """
     演示直接执行sql
     :return:
     """
-    posts = db_session.execute("select * from posts where user_id = :user_id", {"user_id": 1}).fetchall()
-    print(posts)
+    insert_post(1, 'title', 'content')
     return success()

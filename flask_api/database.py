@@ -7,7 +7,7 @@ from flask_api import app
 from flask_api.utils.utils import to_dict
 
 engine = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'), encoding="utf-8", echo=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
+db_session = scoped_session(sessionmaker(autocommit=True,
                                          autoflush=False,
                                          bind=engine))
 Base = declarative_base()
