@@ -2,16 +2,16 @@
 
 TYPE=$1
 
-if [ $TYPE = "--api" ] ; then
-    cd test/api
+if [ $TYPE = "--e2e" ] ; then
+    cd tests/e2e
     python test.py
-elif [ $TYPE = "--model" ] ; then
-    cd test/model
+elif [ $TYPE = "--unit" ] ; then
+    cd tests/unit
     python test.py
 elif [ $TYPE = "--all" ] ; then
-    cd test/api
+    cd tests/e2e
     python test.py
 
-    cd ../../test/model
+    cd ../../tests/unit
     python test.py
 fi

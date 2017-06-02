@@ -10,9 +10,22 @@
 
 在命令行下执行：
     
-    单独测试api接口：sh scripts/test.sh --api
-    单独测试model：sh scripts/test.sh --model
+    单独测试api接口：sh scripts/test.sh --e2e
+    单元测试：sh scripts/test.sh --unit
     运行全部测试：sh scripts/test.sh --all
+
+## 初始化数据
+
+在命令行下执行：
+
+    sh scripts/seed_data.sh
+    
+## 清除数据
+
+在命令行下执行：
+
+    sh scripts/clean_db.sh
+
 
 ## 国际化
 
