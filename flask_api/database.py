@@ -1,15 +1,24 @@
 # -*- coding: utf-8 -*-
 
+import os
 import datetime
 import functools
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-# from Baicycle_API import application as app
 from flask_api.utils.utils import to_json_value
 from flask_api.config.config_dev import DevConfig
+from flask_api.config.config_test import TestConfig
+from flask_api.config.config_production import ProductionConfig
 
-db_url = DevConfig.SQLALCHEMY_DATABASE_URI
+if os.environ.get("debug_mode", None) == "True":
+    config = TestConfig
+elif os.environ.get("debug_mode", None) == "False":
+    config = ProductionConfig
+else:
+    config = DevConfig
+
+db_url = config.SQLALCHEMY_DATABASE_URI
 engine = create_engine(db_url, encoding="utf-8", echo=True)
 db_session = scoped_session(sessionmaker(autocommit=True,
                                          autoflush=False,

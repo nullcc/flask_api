@@ -10,10 +10,18 @@
 
 在命令行下执行：
     
-    单独测试api接口：sh scripts/test.sh --e2e
+    单独测试api：sh scripts/test.sh --e2e
     单元测试：sh scripts/test.sh --unit
     运行全部测试：sh scripts/test.sh --all
 
+不提供任何参数：
+    
+    sh scripts/test.sh
+    
+等同于：
+
+    sh scripts/test.sh --all
+    
 ## 初始化数据
 
 在命令行下执行：
