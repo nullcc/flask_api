@@ -1,5 +1,6 @@
 import pytz
 from flask_api.extensions import db
+from flask_api.database import db_session
 from flask_api.utils.signals import model_saved
 from flask import current_app as app
 
@@ -18,10 +19,16 @@ class CRUDMixin(object):
         保存对象到数据库
         :return:
         """
-        db.session.add(self)
-        db.session.commit()
+        try:
+            db_session.add(self)
+            db_session.commit()
+        except:
+            db_session.rollback()
+            raise
+        finally:
+            db_session.close()
+
         model_saved.send(app._get_current_object())
-        # db.session.close()
         return self
 
     def delete(self):
@@ -29,8 +36,14 @@ class CRUDMixin(object):
         从数据库中删除对象
         :return:
         """
-        db.session.delete(self)
-        db.session.commit()
+        try:
+            db_session.delete(self)
+            db_session.commit()
+        except:
+            db_session.rollback()
+            raise
+        finally:
+            db_session.close()
         return self
 
 
