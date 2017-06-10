@@ -2,16 +2,17 @@
 
 TYPE=$1
 
-if [ $TYPE = "--e2e" ] ; then
-    cd tests/e2e
-    python test.py
-elif [ $TYPE = "--unit" ] ; then
-    cd tests/unit
-    python test.py
-elif [ $TYPE = "--all" ] ; then
-    cd tests/e2e
-    python test.py
+python data/clean_db.py
+python data/seed_data.py
 
-    cd ../../tests/unit
-    python test.py
+if [ $TYPE = "--api" ] ; then
+    python test/api/test.py
+elif [ $TYPE = "--model" ] ; then
+    python test/model/test.py
+elif [ $TYPE = "--all" ] ; then
+    python test/api/test.py
+    python test/model/test.py
+else
+    python test/api/test.py
+    python test/model/test.py
 fi

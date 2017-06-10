@@ -10,8 +10,8 @@
 
 在命令行下执行：
     
-    单独测试api：sh scripts/test.sh --e2e
-    单元测试：sh scripts/test.sh --unit
+    单独测试api：sh scripts/test.sh --api
+    单元测试：sh scripts/test.sh --model
     运行全部测试：sh scripts/test.sh --all
 
 不提供任何参数：
