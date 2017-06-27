@@ -19,8 +19,15 @@ else:
     config = DevConfig
 
 db_url = config.SQLALCHEMY_DATABASE_URI
-engine = create_engine(db_url, encoding="utf-8", echo=True)
-db_session = scoped_session(sessionmaker(autocommit=True,
+engine = create_engine(db_url,
+                       encoding="utf-8",
+                       echo=False,
+                       pool_size=5,
+                       max_overflow=10,
+                       pool_timeout=30,
+                       pool_recycle=1800)
+
+db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
 Base = declarative_base()
