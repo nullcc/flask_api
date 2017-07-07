@@ -4,15 +4,15 @@
 
 测试分为两种：
 
-1.API接口测试
+1.e2e(端到端)测试
 
-2.model测试
+2.unit测试
 
 在命令行下执行：
     
-    单独测试api：sh scripts/test.sh --api
-    单元测试：sh scripts/test.sh --model
-    运行全部测试：sh scripts/test.sh --all
+    e2e测试：sh scripts/test.sh --e2e
+    unit测试：sh scripts/test.sh --unit
+    全部测试：sh scripts/test.sh --all
 
 不提供任何参数：
     
@@ -90,11 +90,12 @@
 
 `translation_new.sh`会执行上面的<1>步骤。
 
-2.然后你需要填写各个语言的翻译字符串。
 
-3.更新各个语言的翻译文件，在命令行下执行：
+2.更新各个语言的翻译文件，在命令行下执行：
     
     sh scripts/translation_update.sh
+    
+3.然后你需要填写各个语言的翻译字符串。
     
 4.在命令行下执行：
     

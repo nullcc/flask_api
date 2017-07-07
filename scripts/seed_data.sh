@@ -1,5 +1,4 @@
 #!/bin/sh
 
-cd data
-python clean_db.py
-python seed_data.py
+python tests/data/clean_db.py
+python tests/data/seed_data.py

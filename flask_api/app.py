@@ -193,9 +193,9 @@ def configure_extensions(app):
     # Flask-Session
     session.init_app(app)
 
-    # Flask-APScheduler
-    scheduler.init_app(app)
-    scheduler.start()
+    # # Flask-APScheduler
+    # scheduler.init_app(app)
+    # scheduler.start()
 
     # # Flask-Login
     # login_manager.login_view = app.config["LOGIN_VIEW"]

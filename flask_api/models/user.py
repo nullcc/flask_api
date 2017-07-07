@@ -6,12 +6,13 @@ from flask import url_for
 from flask_api.extensions import db
 from flask_api.utils.helpers import time_utcnow
 from flask_api.utils.database import CRUDMixin, UTCDateTime
+from flask_api.database import BaseModel
 from sqlalchemy import Column, String
 from ..database import Base, db_session
 from .post import Post
 
 
-class User(Base, CRUDMixin):
+class User(Base, BaseModel, CRUDMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,7 +29,7 @@ class User(Base, CRUDMixin):
 
     posts = db.relationship("Post", backref="user", lazy="dynamic")
 
-    def __init__(self, username, password_hash, email, gender):
+    def __init__(self, username, password_hash, email, gender, *args, **kwargs):
         self.username = username
         self.password_hash = password_hash
         self.email = email
@@ -39,6 +40,8 @@ class User(Base, CRUDMixin):
         self.status = 1
         self.created_time = datetime.now()
         self.updated_time = datetime.now()
+        if kwargs and kwargs['id']:
+            self.id = kwargs['id']
 
     # Properties
     @property

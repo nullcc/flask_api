@@ -1,4 +1,3 @@
 #!/bin/sh
 
-cd data
-python clean_db.py
+python tests/data/clean_db.py

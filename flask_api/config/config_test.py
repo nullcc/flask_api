@@ -13,18 +13,22 @@ class TestConfig(object):
     # 运行端口号
     PORT = 5111
 
-    # 数据库配置项
-    DATABASE_HOST = '127.0.0.1'
-    DATABASE_USERNAME = 'root'
-    DATABASE_PASSWORD = '123456'
-    DATABASE_PORT = '3306'
-    DATABASE_NAME = 'blog'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(
-        DATABASE_USERNAME,
-        DATABASE_PASSWORD,
-        DATABASE_HOST,
-        DATABASE_PORT,
-        DATABASE_NAME)
+    # Mysql配置
+    MYSQL_DATABASE_HOST = '127.0.0.1'
+    MYSQL_DATABASE_PORT = 3306
+    MYSQL_DATABASE_USER = 'root'
+    MYSQL_DATABASE_PASSWORD = '123456'
+    MYSQL_DATABASE_DB = 'baicycle_police'
+    MYSQL_DATABASE_CHARSET = 'utf8mb4'
+
+    # SQLALCHEMY配置
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset={}'.format(
+        MYSQL_DATABASE_USER,
+        MYSQL_DATABASE_PASSWORD,
+        MYSQL_DATABASE_HOST,
+        MYSQL_DATABASE_PORT,
+        MYSQL_DATABASE_DB,
+        MYSQL_DATABASE_CHARSET)
 
     # 数据库查询时间阈值
     DATABASE_QUERY_TIMEOUT = 0.5

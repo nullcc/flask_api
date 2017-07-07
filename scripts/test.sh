@@ -2,17 +2,17 @@
 
 TYPE=$1
 
-python data/clean_db.py
-python data/seed_data.py
+python tests/data/clean_db.py
+python tests/data/seed_data.py
 
-if [ $TYPE = "--api" ] ; then
-    python test/api/test.py
-elif [ $TYPE = "--model" ] ; then
-    python test/model/test.py
-elif [ $TYPE = "--all" ] ; then
-    python test/api/test.py
-    python test/model/test.py
+if [ "$TYPE" = "--e2e" ] ; then
+    python tests/test_e2e.py
+elif [ "$TYPE" = "--unit" ] ; then
+    python tests/test_unit.py
+elif [ "$TYPE" = "--all" ] ; then
+    python tests/test_e2e.py
+    python tests/test_unit.py
 else
-    python test/api/test.py
-    python test/model/test.py
+    python tests/test_e2e.py
+    python tests/test_unit.py
 fi
