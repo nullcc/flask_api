@@ -18,7 +18,7 @@ class DevConfig(object):
     MYSQL_DATABASE_PORT = 3306
     MYSQL_DATABASE_USER = 'root'
     MYSQL_DATABASE_PASSWORD = '123456'
-    MYSQL_DATABASE_DB = 'baicycle_police'
+    MYSQL_DATABASE_DB = 'blog'
     MYSQL_DATABASE_CHARSET = 'utf8mb4'
 
     # SQLALCHEMY配置
