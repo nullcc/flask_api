@@ -5,14 +5,14 @@ from werkzeug.security import check_password_hash
 from flask import url_for
 from flask_api.extensions import db
 from flask_api.utils.helpers import time_utcnow
-from flask_api.utils.database import CRUDMixin, UTCDateTime
-from flask_api.database import BaseModel
+from flask_api.utils.database import UTCDateTime
+from flask_api.models.base import BaseModel
 from sqlalchemy import Column, String
 from ..database import Base, db_session
 from .post import Post
 
 
-class User(Base, BaseModel, CRUDMixin):
+class User(BaseModel):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)

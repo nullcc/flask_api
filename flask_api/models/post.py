@@ -4,13 +4,13 @@ from datetime import datetime
 from flask import url_for
 from flask_api.extensions import db
 from flask_api.utils.helpers import time_utcnow
-from flask_api.utils.database import CRUDMixin, UTCDateTime
-from flask_api.database import BaseModel
+from flask_api.utils.database import UTCDateTime
+from flask_api.models.base import BaseModel
 from sqlalchemy import Column, String
 from ..database import Base
 
 
-class Post(Base, BaseModel, CRUDMixin):
+class Post(BaseModel):
     __tablename__ = "posts"
 
     id = db.Column(db.Integer, primary_key=True)
