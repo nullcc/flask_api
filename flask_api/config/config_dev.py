@@ -86,6 +86,11 @@ class DevConfig(object):
     # 时区
     TIME_ZONE = "Asia/Shanghai"
 
+    # 后端服务地址
+    CORE_SERVICE_URL = "http://localhost:5010"
+    PAYMENT_SERVICE_URL = "http://localhost:5011"
+    JOURNAL_SERVICE_URL = "http://localhost:5012"
+
     def __init__(self):
         pass
 
