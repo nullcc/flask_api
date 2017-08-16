@@ -1,2 +1,2 @@
 # 更新各个语言的翻译文件
-pybabel update -i messages.pot -d Baicycle_API/translations
+pybabel update -i messages.pot -d translations

@@ -1,8 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from .config_dev import DevConfig
 
-class ProductionConfig(object):
+
+class ProductionConfig(DevConfig):
 
     # 调试模式
     DEBUG = False
@@ -68,6 +69,13 @@ class ProductionConfig(object):
     # 显示SQL执行情况
     SQLALCHEMY_ECHO = False
 
+    # 语言
+    ACCEPT_LANGUAGES = {
+        "en": "en_US",
+        "zh-CN": "zh_Hans_CN",
+        "ja": "ja_JP"
+    }
+
     # 国际化本地语言
     BABEL_DEFAULT_LOCALE = 'zh_Hans_CN'  # en_US ja_JP
 
@@ -77,16 +85,5 @@ class ProductionConfig(object):
     # Flask-Session
     SESSION_TYPE = 'redis'
 
-    # Flask-APScheduler
-    SCHEDULER_API_ENABLED = True
-
-    # Flask-APScheduler Jobs
-    # JOBS = [
-    #     {
-    #         'id': 'job1',
-    #         'func': 'flask_api.tasks.job:job1',
-    #         # 'args': (1, 2),
-    #         'trigger': 'interval',
-    #         'seconds': 5
-    #     }
-    # ]
+    # 时区
+    TIME_ZONE = "Asia/Shanghai"

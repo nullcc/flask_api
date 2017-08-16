@@ -5,18 +5,17 @@ import logging
 import time
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, request
 from werkzeug.utils import find_modules, import_string
 from flask_sqlalchemy import get_debug_queries
-# from flask_gzip import Gzip
 # 应用扩展
 from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
-                                  limiter, cors, session, scheduler, allows, api,
-                                  toolbar, babel, gzip)
+                                  limiter, cors, session, allows, api, toolbar, babel, gzip)
 
 from flask import (template_rendered, request_started, request_finished,
                    got_request_exception, request_tearing_down)
 from flask_api.utils.signals import model_saved
+from flask_api.config import config as app_config
 
 APP_NAME = 'FLASK_API'
 config = None
@@ -109,7 +108,9 @@ def configure_context_processors(app):
         注入通用信息到模版
         :return:
         """
-        return dict(current_user=g.user)
+        # if g.user:
+        #     return dict(current_user=g.user)
+        return dict()
 
 
 def configure_request_filter_handlers(app):
@@ -122,6 +123,7 @@ def configure_request_filter_handlers(app):
     @app.before_request
     def before_request():
         print('before request handler')
+        update_locale(app)
         login_manager.reload_user()
         # your before request code...
 
@@ -192,10 +194,6 @@ def configure_extensions(app):
 
     # Flask-Session
     session.init_app(app)
-
-    # # Flask-APScheduler
-    # scheduler.init_app(app)
-    # scheduler.start()
 
     # # Flask-Login
     # login_manager.login_view = app.config["LOGIN_VIEW"]
@@ -389,3 +387,14 @@ def configure_signals(app):
     @model_saved.connect_via(app)
     def log_model_saved(sender, **extra):
         sender.logger.debug('model_saved!')
+
+
+def update_locale(app):
+    """
+    更新当前请求locale
+    :param app:  app实例
+    :return:
+    """
+    language = request.accept_languages.best_match(app_config.ACCEPT_LANGUAGES)
+    locale = app_config.get_locale_by_accept_language(language)
+    app.config['BABEL_DEFAULT_LOCALE'] = locale

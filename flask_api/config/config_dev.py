@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 
@@ -68,6 +67,13 @@ class DevConfig(object):
     # 显示SQL执行情况
     SQLALCHEMY_ECHO = True
 
+    # 语言
+    ACCEPT_LANGUAGES = {
+        "en": "en_US",
+        "zh-CN": "zh_Hans_CN",
+        "ja": "ja_JP"
+    }
+
     # 国际化本地语言
     BABEL_DEFAULT_LOCALE = 'en_US'  # en_US ja_JP zh_Hans_CN
 
@@ -77,16 +83,17 @@ class DevConfig(object):
     # Flask-Session
     SESSION_TYPE = 'redis'
 
-    # Flask-APScheduler
-    SCHEDULER_API_ENABLED = True
+    # 时区
+    TIME_ZONE = "Asia/Shanghai"
 
-    # Flask-APScheduler Jobs
-    # JOBS = [
-    #     {
-    #         'id': 'job1',
-    #         'func': 'flask_api.tasks.job:job1',
-    #         # 'args': (1, 2),
-    #         'trigger': 'interval',
-    #         'seconds': 5
-    #     }
-    # ]
+    def __init__(self):
+        pass
+
+    @classmethod
+    def get_locale_by_accept_language(cls, accept_language):
+        """
+        通过请求头部的Accept-Language字段判断本地化语言，默认en_US
+        :param accept_language:
+        :return:
+        """
+        return cls.ACCEPT_LANGUAGES.get(accept_language, "en_US")
