@@ -9,15 +9,15 @@ from flask import Flask, g, render_template, request
 from werkzeug.utils import find_modules, import_string
 from flask_sqlalchemy import get_debug_queries
 # 应用扩展
-from flask_api.extensions import (db, mail, redis_store, celery, cache, login_manager,
+from src.extensions import (db, mail, redis_store, celery, cache, login_manager,
                                   limiter, cors, session, allows, api, toolbar, babel, gzip)
 
 from flask import (template_rendered, request_started, request_finished,
                    got_request_exception, request_tearing_down)
-from flask_api.utils.signals import model_saved
-from flask_api.config import config as app_config
+from src.utils.signals import model_saved
+from src.config import config as app_config
 
-APP_NAME = 'FLASK_API'
+APP_NAME = 'src'
 config = None
 
 
@@ -26,13 +26,13 @@ def create_app(conf=None):
     创建flask app
     """
     global config
-    app = Flask(APP_NAME, template_folder='flask_api/templates')
+    app = Flask(APP_NAME, template_folder='src/templates')
 
     config = {}
     [config.__setitem__(k, getattr(conf, k)) for k in dir(conf) if not k.startswith('_')]
 
     configure_app(app, conf)
-    register_blueprints('flask_api.views', app)
+    register_blueprints('src.views', app)
     configure_celery_app(app, celery)
     configure_extensions(app)
     configure_template_filters(app)
@@ -210,7 +210,7 @@ def configure_extensions(app):
         :param user_id:
         :return:
         """
-        from flask_api.models.user import User
+        from src.models.user import User
         user_instance = User.query.filter_by(id=user_id).first()
         if user_instance:
             g.user = user_instance
@@ -254,7 +254,7 @@ def configure_db(app):
     :param app:
     :return:
     """
-    from flask_api.database import init_db, db_session
+    from src.database import init_db, db_session
     init_db()
 
     @app.teardown_request
@@ -271,7 +271,7 @@ def configure_logging(app):
     if app.config.get('TESTING', None):  # 运行测试的时候不配置日志
         return
 
-    logs_folder = os.path.join(app.root_path, os.pardir, "flask_api/logs")
+    logs_folder = os.path.join(app.root_path, os.pardir, "logs")
     from logging.handlers import SMTPHandler
     formatter = logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s '

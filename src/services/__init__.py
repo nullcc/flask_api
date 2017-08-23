@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask_api.config import config
+from src.config import config
 from .user import UserService
 from .message import MessageService
 

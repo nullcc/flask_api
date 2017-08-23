@@ -3,8 +3,8 @@
 import unittest
 import sys
 sys.path.append('.')
-from flask_api.app import create_app
-from flask_api.config.config_dev import DevConfig
+from src.app import create_app
+from src.config.config_dev import DevConfig
 
 app = create_app(DevConfig)
 ctx = app.app_context()

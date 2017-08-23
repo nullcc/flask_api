@@ -2,9 +2,9 @@
 
 import sys
 sys.path.append('.')
-from flask_api.models.post import Post
-from flask_api.app import create_app
-from flask_api.config.config_dev import DevConfig
+from src.models.post import Post
+from src.app import create_app
+from src.config.config_dev import DevConfig
 from flask.globals import _app_ctx_stack
 
 test_post1 = Post(1, "测试标题1", "测试正文1", id=1)

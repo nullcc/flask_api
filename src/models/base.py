@@ -2,10 +2,10 @@
 
 import datetime
 from sqlalchemy import inspect
-from flask_api.utils.database import CRUDMixin
-from flask_api.database import Base
-from flask_api.utils.utils import to_json_value
-# from flask_api.db import transaction
+from src.utils.database import CRUDMixin
+from src.database import Base
+from src.utils.utils import to_json_value
+# from src.db import transaction
 
 
 class BaseModel(Base, CRUDMixin):

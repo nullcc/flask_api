@@ -2,6 +2,6 @@
 pybabel extract -F babel.cfg -o messages.pot .
 
 # 生成各个语言的翻译文件
-pybabel init -i messages.pot -d flask_api/translations -l zh_Hans_CN
-pybabel init -i messages.pot -d flask_api/translations -l en_US
-pybabel init -i messages.pot -d flask_api/translations -l ja_JP
+pybabel init -i messages.pot -d src/translations -l zh_Hans_CN
+pybabel init -i messages.pot -d src/translations -l en_US
+pybabel init -i messages.pot -d src/translations -l ja_JP

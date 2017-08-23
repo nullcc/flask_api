@@ -4,8 +4,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from flask_api.app import create_app
-from flask_api.config.config_dev import Config
+from src.app import create_app
+from src.config.config_dev import Config
 
 app = create_app(Config)
 

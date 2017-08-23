@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_api.app import create_app
-from flask_api.config.config_test import TestConfig
-from flask_api.config.config_production import ProductionConfig
+from src.app import create_app
+from src.config.config_test import TestConfig
+from src.config.config_production import ProductionConfig
 import logging
 import os
 

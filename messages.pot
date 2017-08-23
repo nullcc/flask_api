@@ -17,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: flask_api/templates/i18n/i18n.html:11
+#: src/templates/i18n/i18n.html:11
 msgid "Hello"
 msgstr ""
 
-#: flask_api/templates/i18n/i18n.html:12
+#: src/templates/i18n/i18n.html:12
 msgid "baicycle"
 msgstr ""
 
-#: flask_api/templates/i18n/i18n.html:13
+#: src/templates/i18n/i18n.html:13
 msgid "Bye"
 msgstr ""
 
-#: flask_api/templates/i18n/i18n.html:14
+#: src/templates/i18n/i18n.html:14
 msgid "World"
 msgstr ""
 

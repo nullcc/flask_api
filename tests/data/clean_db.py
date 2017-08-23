@@ -4,12 +4,12 @@
 
 import sys
 sys.path.append('.')
-from flask_api.app import create_app
-from flask_api.database import db_session
-from flask_api.config.config_dev import DevConfig
+from src.app import create_app
+from src.database import db_session
+from src.config.config_dev import DevConfig
 
-from flask_api.models.post import Post
-from flask_api.models.user import User
+from src.models.post import Post
+from src.models.user import User
 
 app = create_app(DevConfig)
 ctx = app.app_context()

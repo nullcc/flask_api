@@ -4,7 +4,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 from base_test import BaseTest
-from flask_api.models.post import Post
+from src.models.post import Post
 from data.post import test_post1
 
 

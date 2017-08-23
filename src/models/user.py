@@ -3,10 +3,10 @@
 from datetime import datetime
 from werkzeug.security import check_password_hash
 from flask import url_for
-from flask_api.extensions import db
-from flask_api.utils.helpers import time_utcnow
-from flask_api.utils.database import UTCDateTime
-from flask_api.models.base import BaseModel
+from src.extensions import db
+from src.utils.helpers import time_utcnow
+from src.utils.database import UTCDateTime
+from src.models.base import BaseModel
 from sqlalchemy import Column, String
 from ..database import Base, db_session
 from .post import Post

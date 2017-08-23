@@ -1,7 +1,7 @@
 import pytz
-from flask_api.extensions import db
-from flask_api.database import db_session
-from flask_api.utils.signals import model_saved
+from src.extensions import db
+from src.database import db_session
+from src.utils.signals import model_saved
 from flask import current_app as app
 
 

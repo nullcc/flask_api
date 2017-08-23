@@ -37,7 +37,7 @@ def show(user_id):
     # p.execute()
     # p.get('user_2')
     # print(p.execute())
-    sess['_session_id'] = 'flask_api_session_1'
+    sess['_session_id'] = 'src_session_1'
     return success(user=user)
 
 

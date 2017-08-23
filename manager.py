@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask_api.app import create_app
-from flask_api.config.config_dev import DevConfig
+from src.app import create_app
+from src.config.config_dev import DevConfig
 
 app = create_app(DevConfig)
 

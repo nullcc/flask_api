@@ -3,7 +3,7 @@
 
 from flask import Blueprint, request
 from ..utils.http import success
-from flask_api.tasks.email import send_welcome_email
+from src.tasks.email import send_welcome_email
 
 bp = Blueprint('email', __name__)
 

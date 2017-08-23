@@ -2,9 +2,9 @@
 
 import os
 import pytz
-from flask_api.config.config_dev import DevConfig
-from flask_api.config.config_test import TestConfig
-from flask_api.config.config_production import ProductionConfig
+from src.config.config_dev import DevConfig
+from src.config.config_test import TestConfig
+from src.config.config_production import ProductionConfig
 
 if os.environ.get("debug_mode", None) == "True":
     config = TestConfig

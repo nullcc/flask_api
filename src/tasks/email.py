@@ -5,7 +5,7 @@
 """
 
 from flask_mail import Message
-from flask_api.extensions import mail, celery
+from src.extensions import mail, celery
 
 
 @celery.task

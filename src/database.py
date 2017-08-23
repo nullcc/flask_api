@@ -6,10 +6,10 @@ import functools
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from flask_api.utils.utils import to_json_value
-from flask_api.config.config_dev import DevConfig
-from flask_api.config.config_test import TestConfig
-from flask_api.config.config_production import ProductionConfig
+from src.utils.utils import to_json_value
+from src.config.config_dev import DevConfig
+from src.config.config_test import TestConfig
+from src.config.config_production import ProductionConfig
 
 if os.environ.get("debug_mode", None) == "True":
     config = TestConfig
@@ -35,6 +35,6 @@ Base.query = db_session.query_property()
 
 
 def init_db():
-    import flask_api.models
+    import src.models
     Base.metadata.create_all(bind=engine)
 
